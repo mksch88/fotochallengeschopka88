@@ -1,37 +1,30 @@
-# Martin & Matilda — Fotochallenge
+# Martin & Matilda — Fotochallenge V2
 
-Fertige mobile Hochzeits-Fotochallenge mit Cloudinary-Upload.
+## Upload auf GitHub
 
-## GitHub-Upload
-
-Diese Dateien direkt in das öffentliche Repository hochladen:
+Die vier vorhandenen Dateien im Repository durch diese Dateien ersetzen:
 
 - index.html
 - style.css
 - script.js
 - README.md
 
-Danach:
+Danach aktualisiert GitHub Pages die Website automatisch.
 
-1. Settings
-2. Pages
-3. Source: Deploy from a branch
-4. Branch: main
-5. Folder: / (root)
-6. Save
+## Enthalten
+
+- minimalistische Landingpage
+- zufällige Challenge
+- Wechsel zu einer anderen Aufgabe
+- vollständige Aufgabenliste
+- Fotoaufnahme oder Galerieauswahl
+- direkter Cloudinary-Upload
+- Danke-Seite nach erfolgreichem Upload
 
 ## Cloudinary
 
-Eingetragen:
-
 - Cloud Name: zdsvvazz
 - Upload Preset: fotochallengeschopka88
-
-Keine API Keys und kein API Secret sind im Projekt enthalten.
-
-## Challenges ändern
-
-Die Challenge-Liste befindet sich oben in `script.js`.
 
 ## Nach der Hochzeit
 

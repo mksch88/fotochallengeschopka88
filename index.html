@@ -3,82 +3,111 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f3f0e9">
+  <meta name="theme-color" content="#f4f1ea">
   <meta name="description" content="Fotochallenge zur Hochzeit von Martin und Matilda">
   <title>Martin & Matilda — Fotochallenge</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <main class="site-shell">
-    <header class="intro">
-      <div class="meta-row">
+  <main class="app">
+    <section id="welcomeView" class="view welcome-view is-active">
+      <div class="topline">
         <span>08.08.2026</span>
         <span>Köln</span>
       </div>
 
-      <div class="title-block">
-        <p class="kicker">Martin & Matilda</p>
-        <h1>Fotochallenge</h1>
-        <p class="lead">
-          Helft uns, diesen Tag aus euren Perspektiven festzuhalten.
+      <div class="welcome-copy">
+        <p class="eyebrow">Martin & Matilda</p>
+        <h1>Foto<br>challenge</h1>
+        <p class="intro">
+          Haltet diesen Tag aus eurer Perspektive fest.
         </p>
       </div>
-    </header>
 
-    <section class="section intro-copy">
-      <div class="section-number">01</div>
-      <div>
-        <h2>So funktioniert es</h2>
-        <p>Wählt eine Aufgabe, macht ein Foto und ladet es direkt hier hoch.</p>
-      </div>
-    </section>
-
-    <section class="upload-panel">
-      <div class="field-group">
-        <label for="challenge">Challenge</label>
-        <select id="challenge" required>
-          <option value="">Aufgabe auswählen</option>
-        </select>
-      </div>
-
-      <div class="field-group">
-        <label for="guestName">Name <span>optional</span></label>
-        <input id="guestName" type="text" maxlength="60" placeholder="Euer Vorname oder eure Namen">
-      </div>
-
-      <div class="field-group">
-        <label for="photo">Foto</label>
-        <label class="file-picker" for="photo">
-          <span id="fileLabel">Foto aufnehmen oder auswählen</span>
-          <span class="file-symbol">↗</span>
-        </label>
-        <input id="photo" class="visually-hidden" type="file" accept="image/*" capture="environment" required>
-      </div>
-
-      <div id="previewWrap" class="preview-wrap" hidden>
-        <img id="preview" alt="Vorschau des ausgewählten Fotos">
-      </div>
-
-      <button id="uploadButton" type="button">
-        <span>Foto hochladen</span>
+      <button id="enterButton" class="text-button">
+        <span>Challenge starten</span>
         <span>→</span>
       </button>
-
-      <p id="status" class="status" aria-live="polite"></p>
     </section>
 
-    <section class="section challenge-section">
-      <div class="section-number">02</div>
-      <div>
-        <h2>Alle Aufgaben</h2>
-        <div id="challengeList" class="challenge-list"></div>
+    <section id="challengeView" class="view challenge-view">
+      <div class="topline">
+        <button id="backButton" class="quiet-button" aria-label="Zurück">←</button>
+        <span id="challengeCounter">01 / 25</span>
+      </div>
+
+      <article class="challenge-card">
+        <p id="challengeNumber" class="challenge-number">01</p>
+        <h2 id="challengeText">Stellt ein berühmtes Gemälde nach.</h2>
+      </article>
+
+      <div class="challenge-actions">
+        <button id="shuffleButton" class="secondary-button">
+          <span>Andere Aufgabe</span>
+          <span>↻</span>
+        </button>
+        <button id="chooseButton" class="primary-button">
+          <span>Diese Aufgabe wählen</span>
+          <span>→</span>
+        </button>
+      </div>
+
+      <button id="allChallengesButton" class="list-link">Alle Aufgaben ansehen</button>
+    </section>
+
+    <section id="uploadView" class="view upload-view">
+      <div class="topline">
+        <button id="uploadBackButton" class="quiet-button" aria-label="Zurück">←</button>
+        <span>Upload</span>
+      </div>
+
+      <div class="selected-challenge">
+        <p id="uploadChallengeNumber" class="challenge-number">01</p>
+        <h2 id="uploadChallengeText">Stellt ein berühmtes Gemälde nach.</h2>
+      </div>
+
+      <div class="form">
+        <label for="guestName">Name <span>optional</span></label>
+        <input id="guestName" type="text" maxlength="60" placeholder="Euer Vorname oder eure Namen">
+
+        <label for="photo">Foto</label>
+        <label for="photo" class="file-picker">
+          <span id="fileLabel">Foto aufnehmen oder auswählen</span>
+          <span>↗</span>
+        </label>
+        <input id="photo" type="file" accept="image/*" capture="environment" hidden>
+
+        <div id="previewWrap" class="preview-wrap" hidden>
+          <img id="preview" alt="Vorschau des ausgewählten Fotos">
+        </div>
+
+        <button id="uploadButton" class="primary-button full-width">
+          <span>Foto hochladen</span>
+          <span>→</span>
+        </button>
+
+        <p id="status" class="status" aria-live="polite"></p>
       </div>
     </section>
 
-    <footer>
-      <span>Danke für eure Perspektive.</span>
-      <span>Martin & Matilda</span>
-    </footer>
+    <section id="successView" class="view success-view">
+      <div class="success-mark">✓</div>
+      <p class="eyebrow">Upload abgeschlossen</p>
+      <h2>Danke für eure Perspektive.</h2>
+      <button id="nextChallengeButton" class="primary-button full-width">
+        <span>Nächste Challenge</span>
+        <span>→</span>
+      </button>
+      <button id="finishButton" class="list-link">Zur Startseite</button>
+    </section>
+
+    <section id="listView" class="view list-view">
+      <div class="topline">
+        <button id="listBackButton" class="quiet-button" aria-label="Zurück">←</button>
+        <span>Alle Aufgaben</span>
+      </div>
+      <div id="challengeList" class="challenge-list"></div>
+    </section>
   </main>
 
   <script src="script.js"></script>

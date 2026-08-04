@@ -29,29 +29,92 @@ const challenges = [
   "Macht das Bild, das unbedingt ins Hochzeitsalbum gehört."
 ];
 
-const challengeSelect = document.querySelector("#challenge");
-const challengeList = document.querySelector("#challengeList");
+let currentIndex = Math.floor(Math.random() * challenges.length);
+
+const views = [...document.querySelectorAll(".view")];
+const challengeNumber = document.querySelector("#challengeNumber");
+const challengeText = document.querySelector("#challengeText");
+const challengeCounter = document.querySelector("#challengeCounter");
+const uploadChallengeNumber = document.querySelector("#uploadChallengeNumber");
+const uploadChallengeText = document.querySelector("#uploadChallengeText");
 const guestNameInput = document.querySelector("#guestName");
 const photoInput = document.querySelector("#photo");
-const uploadButton = document.querySelector("#uploadButton");
-const statusText = document.querySelector("#status");
+const fileLabel = document.querySelector("#fileLabel");
 const previewWrap = document.querySelector("#previewWrap");
 const preview = document.querySelector("#preview");
-const fileLabel = document.querySelector("#fileLabel");
+const uploadButton = document.querySelector("#uploadButton");
+const statusText = document.querySelector("#status");
+const challengeList = document.querySelector("#challengeList");
+
+function showView(id) {
+  views.forEach(view => view.classList.toggle("is-active", view.id === id));
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function renderChallenge() {
+  const number = String(currentIndex + 1).padStart(2, "0");
+  challengeNumber.textContent = number;
+  challengeText.textContent = challenges[currentIndex];
+  challengeCounter.textContent = `${number} / ${challenges.length}`;
+  uploadChallengeNumber.textContent = number;
+  uploadChallengeText.textContent = challenges[currentIndex];
+}
+
+function pickDifferentChallenge() {
+  let next = currentIndex;
+  while (next === currentIndex && challenges.length > 1) {
+    next = Math.floor(Math.random() * challenges.length);
+  }
+  currentIndex = next;
+  renderChallenge();
+}
+
+function resetUploadForm() {
+  guestNameInput.value = "";
+  photoInput.value = "";
+  fileLabel.textContent = "Foto aufnehmen oder auswählen";
+  previewWrap.hidden = true;
+  preview.removeAttribute("src");
+  statusText.textContent = "";
+  statusText.className = "status";
+}
 
 challenges.forEach((text, index) => {
-  const option = document.createElement("option");
-  option.value = String(index + 1);
-  option.textContent = `${String(index + 1).padStart(2, "0")} — ${text}`;
-  challengeSelect.appendChild(option);
-
-  const item = document.createElement("div");
-  item.className = "challenge-item";
-  item.innerHTML = `
-    <span class="challenge-number">${String(index + 1).padStart(2, "0")}</span>
+  const button = document.createElement("button");
+  button.className = "challenge-list-item";
+  button.innerHTML = `
+    <span>${String(index + 1).padStart(2, "0")}</span>
     <span>${escapeHtml(text)}</span>
   `;
-  challengeList.appendChild(item);
+  button.addEventListener("click", () => {
+    currentIndex = index;
+    renderChallenge();
+    showView("challengeView");
+  });
+  challengeList.appendChild(button);
+});
+
+document.querySelector("#enterButton").addEventListener("click", () => {
+  renderChallenge();
+  showView("challengeView");
+});
+
+document.querySelector("#backButton").addEventListener("click", () => showView("welcomeView"));
+document.querySelector("#shuffleButton").addEventListener("click", pickDifferentChallenge);
+document.querySelector("#chooseButton").addEventListener("click", () => showView("uploadView"));
+document.querySelector("#allChallengesButton").addEventListener("click", () => showView("listView"));
+document.querySelector("#listBackButton").addEventListener("click", () => showView("challengeView"));
+document.querySelector("#uploadBackButton").addEventListener("click", () => showView("challengeView"));
+
+document.querySelector("#nextChallengeButton").addEventListener("click", () => {
+  resetUploadForm();
+  pickDifferentChallenge();
+  showView("challengeView");
+});
+
+document.querySelector("#finishButton").addEventListener("click", () => {
+  resetUploadForm();
+  showView("welcomeView");
 });
 
 photoInput.addEventListener("change", () => {
@@ -69,94 +132,62 @@ photoInput.addEventListener("change", () => {
   previewWrap.hidden = false;
 });
 
-uploadButton.addEventListener("click", uploadPhoto);
-
-async function uploadPhoto() {
-  clearStatus();
-
-  const challengeNumber = challengeSelect.value;
+uploadButton.addEventListener("click", async () => {
   const file = photoInput.files[0];
-  const guestName = guestNameInput.value.trim();
+  const guestName = guestNameInput.value.trim() || "anonym";
 
-  if (!challengeNumber) {
-    showStatus("Bitte wählt zuerst eine Challenge aus.", "error");
-    return;
-  }
+  statusText.textContent = "";
+  statusText.className = "status";
 
   if (!file) {
-    showStatus("Bitte wählt ein Foto aus.", "error");
+    statusText.textContent = "Bitte wählt zuerst ein Foto aus.";
+    statusText.classList.add("error");
     return;
   }
 
   if (!file.type.startsWith("image/")) {
-    showStatus("Bitte ladet nur eine Bilddatei hoch.", "error");
+    statusText.textContent = "Bitte ladet nur eine Bilddatei hoch.";
+    statusText.classList.add("error");
     return;
   }
 
   uploadButton.disabled = true;
   uploadButton.firstElementChild.textContent = "Wird hochgeladen …";
 
-  const challengeText = challenges[Number(challengeNumber) - 1];
-  const safeGuestName = guestName || "anonym";
-
   const formData = new FormData();
   formData.append("file", file);
   formData.append("upload_preset", UPLOAD_PRESET);
-  formData.append("tags", `hochzeit-2026,fotochallenge,challenge-${challengeNumber}`);
+  formData.append("tags", `hochzeit-2026,fotochallenge,challenge-${currentIndex + 1}`);
   formData.append(
     "context",
-    `challenge_number=${challengeNumber}|challenge=${sanitizeContext(challengeText)}|guest=${sanitizeContext(safeGuestName)}`
+    `challenge_number=${currentIndex + 1}|challenge=${sanitizeContext(challenges[currentIndex])}|guest=${sanitizeContext(guestName)}`
   );
 
   try {
     const response = await fetch(
       `https://api.cloudinary.com/v1_1/${encodeURIComponent(CLOUD_NAME)}/image/upload`,
-      {
-        method: "POST",
-        body: formData
-      }
+      { method: "POST", body: formData }
     );
 
     const result = await response.json();
 
     if (!response.ok) {
-      const message = result?.error?.message || "Der Upload ist fehlgeschlagen.";
-      throw new Error(message);
+      throw new Error(result?.error?.message || "Upload fehlgeschlagen");
     }
 
-    showStatus("Upload abgeschlossen. Vielen Dank für euer Foto.", "success");
-    challengeSelect.value = "";
-    guestNameInput.value = "";
-    photoInput.value = "";
-    previewWrap.hidden = true;
-    preview.removeAttribute("src");
-    fileLabel.textContent = "Foto aufnehmen oder auswählen";
+    showView("successView");
   } catch (error) {
     console.error(error);
-    showStatus(
-      "Der Upload hat nicht funktioniert. Bitte prüft eure Verbindung und versucht es erneut.",
-      "error"
-    );
+    statusText.textContent = "Der Upload hat nicht funktioniert. Bitte versucht es erneut.";
+    statusText.classList.add("error");
   } finally {
     uploadButton.disabled = false;
     uploadButton.firstElementChild.textContent = "Foto hochladen";
   }
-}
-
-function showStatus(message, type) {
-  statusText.textContent = message;
-  statusText.className = `status ${type}`;
-}
-
-function clearStatus() {
-  statusText.textContent = "";
-  statusText.className = "status";
-}
+});
 
 function sanitizeContext(value) {
-  return String(value)
-    .replace(/[|=]/g, "-")
-    .slice(0, 250);
+  return String(value).replace(/[|=]/g, "-").slice(0, 250);
 }
 
 function escapeHtml(value) {
@@ -167,3 +198,5 @@ function escapeHtml(value) {
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
 }
+
+renderChallenge();
