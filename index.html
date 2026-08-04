@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f3f0e9">
+  <meta name="description" content="Fotochallenge zur Hochzeit von Martin und Matilda">
+  <title>Martin & Matilda — Fotochallenge</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="site-shell">
+    <header class="intro">
+      <div class="meta-row">
+        <span>08.08.2026</span>
+        <span>Köln</span>
+      </div>
+
+      <div class="title-block">
+        <p class="kicker">Martin & Matilda</p>
+        <h1>Fotochallenge</h1>
+        <p class="lead">
+          Helft uns, diesen Tag aus euren Perspektiven festzuhalten.
+        </p>
+      </div>
+    </header>
+
+    <section class="section intro-copy">
+      <div class="section-number">01</div>
+      <div>
+        <h2>So funktioniert es</h2>
+        <p>Wählt eine Aufgabe, macht ein Foto und ladet es direkt hier hoch.</p>
+      </div>
+    </section>
+
+    <section class="upload-panel">
+      <div class="field-group">
+        <label for="challenge">Challenge</label>
+        <select id="challenge" required>
+          <option value="">Aufgabe auswählen</option>
+        </select>
+      </div>
+
+      <div class="field-group">
+        <label for="guestName">Name <span>optional</span></label>
+        <input id="guestName" type="text" maxlength="60" placeholder="Euer Vorname oder eure Namen">
+      </div>
+
+      <div class="field-group">
+        <label for="photo">Foto</label>
+        <label class="file-picker" for="photo">
+          <span id="fileLabel">Foto aufnehmen oder auswählen</span>
+          <span class="file-symbol">↗</span>
+        </label>
+        <input id="photo" class="visually-hidden" type="file" accept="image/*" capture="environment" required>
+      </div>
+
+      <div id="previewWrap" class="preview-wrap" hidden>
+        <img id="preview" alt="Vorschau des ausgewählten Fotos">
+      </div>
+
+      <button id="uploadButton" type="button">
+        <span>Foto hochladen</span>
+        <span>→</span>
+      </button>
+
+      <p id="status" class="status" aria-live="polite"></p>
+    </section>
+
+    <section class="section challenge-section">
+      <div class="section-number">02</div>
+      <div>
+        <h2>Alle Aufgaben</h2>
+        <div id="challengeList" class="challenge-list"></div>
+      </div>
+    </section>
+
+    <footer>
+      <span>Danke für eure Perspektive.</span>
+      <span>Martin & Matilda</span>
+    </footer>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
