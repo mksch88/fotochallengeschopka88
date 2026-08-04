@@ -1,31 +1,39 @@
-# Martin & Matilda — Fotochallenge V2
+# Martin & Matilda — Fotochallenge Live V1
 
-## Upload auf GitHub
-
-Die vier vorhandenen Dateien im Repository durch diese Dateien ersetzen:
+## Dateien
 
 - index.html
 - style.css
 - script.js
-- README.md
+- slideshow.html
+- slideshow.css
+- slideshow.js
 
-Danach aktualisiert GitHub Pages die Website automatisch.
+## GitHub
 
-## Enthalten
+Alle Dateien direkt in das Repository hochladen und vorhandene Dateien ersetzen.
 
-- minimalistische Landingpage
-- zufällige Challenge
-- Wechsel zu einer anderen Aufgabe
-- vollständige Aufgabenliste
-- Fotoaufnahme oder Galerieauswahl
-- direkter Cloudinary-Upload
-- Danke-Seite nach erfolgreichem Upload
+Die Gäste-Seite:
+https://mksch88.github.io/fotochallengeschopka88/
 
-## Cloudinary
+Die Live-Diashow:
+https://mksch88.github.io/fotochallengeschopka88/slideshow.html
 
-- Cloud Name: zdsvvazz
-- Upload Preset: fotochallengeschopka88
+## Test
 
-## Nach der Hochzeit
+1. Gäste-Seite öffnen.
+2. Foto hochladen.
+3. In Supabase prüfen, ob eine neue Zeile in `photos` erscheint.
+4. `slideshow.html` öffnen.
+5. Das Foto sollte spätestens nach etwa fünf Sekunden erscheinen.
 
-Das unsigned Upload-Preset in Cloudinary deaktivieren oder löschen.
+## Bedienung der Diashow
+
+- `F`: Vollbild
+- Leertaste oder Pfeil rechts: nächstes Foto
+- Automatischer Wechsel alle 8 Sekunden
+- Neue Fotos werden alle 5 Sekunden geprüft und zuerst gezeigt
+
+## Wichtig
+
+Die Diashow zeigt alle Datensätze mit `approved = true`.

@@ -11,19 +11,9 @@
   background: var(--paper);
 }
 
-html, body {
-  margin: 0;
-  min-height: 100%;
-  background: var(--paper);
-}
-
-button, input {
-  font: inherit;
-}
-
-button {
-  color: inherit;
-}
+html, body { margin: 0; min-height: 100%; background: var(--paper); }
+button, input { font: inherit; }
+button { color: inherit; }
 
 .app {
   width: min(100% - 24px, 760px);
@@ -38,10 +28,7 @@ button {
   animation: fadeIn .32s ease;
 }
 
-.view.is-active {
-  display: flex;
-  flex-direction: column;
-}
+.view.is-active { display: flex; flex-direction: column; }
 
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(6px); }
@@ -57,14 +44,8 @@ button {
   font-size: .72rem;
 }
 
-.welcome-view {
-  justify-content: space-between;
-}
-
-.welcome-copy {
-  margin: auto 0;
-  padding: 60px 0;
-}
+.welcome-view { justify-content: space-between; }
+.welcome-copy { margin: auto 0; padding: 60px 0; }
 
 .eyebrow {
   margin: 0 0 22px;
@@ -82,7 +63,7 @@ h1 {
   letter-spacing: -.07em;
 }
 
-.intro {
+.intro, .success-note {
   max-width: 420px;
   margin: 34px 0 0;
   color: var(--muted);
@@ -90,10 +71,7 @@ h1 {
   line-height: 1.5;
 }
 
-.text-button,
-.primary-button,
-.secondary-button,
-.file-picker {
+.text-button, .primary-button, .secondary-button, .file-picker {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -120,14 +98,8 @@ h1 {
   cursor: pointer;
 }
 
-.challenge-view {
-  justify-content: space-between;
-}
-
-.challenge-card {
-  margin: auto 0;
-  padding: 70px 0;
-}
+.challenge-view { justify-content: space-between; }
+.challenge-card { margin: auto 0; padding: 70px 0; }
 
 .challenge-number {
   margin: 0 0 24px;
@@ -145,14 +117,9 @@ h2 {
   letter-spacing: -.045em;
 }
 
-.challenge-actions {
-  display: grid;
-  gap: 10px;
-}
+.challenge-actions { display: grid; gap: 10px; }
 
-.primary-button,
-.secondary-button,
-.file-picker {
+.primary-button, .secondary-button, .file-picker {
   min-height: 58px;
   padding: 0 18px;
 }
@@ -163,16 +130,12 @@ h2 {
   color: var(--paper);
 }
 
-.secondary-button,
-.file-picker {
+.secondary-button, .file-picker {
   border: 1px solid var(--ink);
   background: transparent;
 }
 
-.primary-button:disabled {
-  opacity: .55;
-  cursor: wait;
-}
+.primary-button:disabled { opacity: .55; cursor: wait; }
 
 .list-link {
   margin: 18px auto 0;
@@ -184,22 +147,15 @@ h2 {
   cursor: pointer;
 }
 
-.upload-view {
-  gap: 44px;
-}
+.upload-view { gap: 44px; }
 
 .selected-challenge {
   padding: 34px 0 38px;
   border-bottom: 1px solid var(--line);
 }
 
-.selected-challenge h2 {
-  font-size: clamp(2.2rem, 8vw, 4rem);
-}
-
-.form {
-  padding-top: 4px;
-}
+.selected-challenge h2 { font-size: clamp(2.2rem, 8vw, 4rem); }
+.form { padding-top: 4px; }
 
 .form > label:not(.file-picker) {
   display: flex;
@@ -239,9 +195,7 @@ input[type="text"] {
   object-fit: contain;
 }
 
-.full-width {
-  margin-top: 24px;
-}
+.full-width { margin-top: 24px; }
 
 .status {
   min-height: 1.3em;
@@ -268,13 +222,9 @@ input[type="text"] {
   font-size: 1.4rem;
 }
 
-.success-view h2 {
-  max-width: 620px;
-}
+.success-view h2 { max-width: 620px; }
 
-.challenge-list {
-  padding: 34px 0;
-}
+.challenge-list { padding: 34px 0; }
 
 .challenge-list-item {
   display: grid;
@@ -289,9 +239,7 @@ input[type="text"] {
   cursor: pointer;
 }
 
-.challenge-list-item:last-child {
-  border-bottom: 1px solid var(--line);
-}
+.challenge-list-item:last-child { border-bottom: 1px solid var(--line); }
 
 .challenge-list-item span:first-child {
   color: var(--muted);
@@ -300,11 +248,6 @@ input[type="text"] {
 }
 
 @media (min-width: 700px) {
-  .challenge-actions {
-    grid-template-columns: 1fr 1.25fr;
-  }
-
-  .app {
-    width: min(100% - 56px, 760px);
-  }
+  .challenge-actions { grid-template-columns: 1fr 1.25fr; }
+  .app { width: min(100% - 56px, 760px); }
 }

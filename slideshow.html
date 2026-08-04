@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#11110f">
+  <title>Martin & Matilda — Live-Diashow</title>
+  <link rel="stylesheet" href="slideshow.css">
+</head>
+<body>
+  <main class="slideshow">
+    <header class="slideshow-header">
+      <span>Martin & Matilda</span>
+      <span>08.08.2026</span>
+    </header>
+
+    <section class="stage">
+      <div id="emptyState" class="empty-state">
+        <p>Live Exhibition</p>
+        <h1>Die ersten Erinnerungen erscheinen gleich hier.</h1>
+      </div>
+
+      <figure id="slide" class="slide" hidden>
+        <img id="slideImage" alt="">
+        <figcaption>
+          <span id="slideChallenge"></span>
+          <span id="slideGuest"></span>
+        </figcaption>
+      </figure>
+    </section>
+
+    <footer class="slideshow-footer">
+      <span id="photoCount">0 Beiträge</span>
+      <span>Live</span>
+    </footer>
+  </main>
+
+  <script src="slideshow.js"></script>
+</body>
+</html>

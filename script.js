@@ -1,6 +1,9 @@
 const CLOUD_NAME = "zdsvvazz";
 const UPLOAD_PRESET = "fotochallengeschopka88";
 
+const SUPABASE_URL = "https://wcvukbdjrrusvrhsnbvf.supabase.co";
+const SUPABASE_KEY = "sb_publishable_lmaPnsRP26-00iOknGpBOw_Dh4kgCNq";
+
 const challenges = [
   "Macht ein Selfie mit dem Brautpaar.",
   "Stellt ein berühmtes Gemälde nach.",
@@ -164,15 +167,38 @@ uploadButton.addEventListener("click", async () => {
   );
 
   try {
-    const response = await fetch(
+    const cloudinaryResponse = await fetch(
       `https://api.cloudinary.com/v1_1/${encodeURIComponent(CLOUD_NAME)}/image/upload`,
       { method: "POST", body: formData }
     );
 
-    const result = await response.json();
+    const cloudinaryResult = await cloudinaryResponse.json();
 
-    if (!response.ok) {
-      throw new Error(result?.error?.message || "Upload fehlgeschlagen");
+    if (!cloudinaryResponse.ok) {
+      throw new Error(cloudinaryResult?.error?.message || "Cloudinary-Upload fehlgeschlagen");
+    }
+
+    const databaseResponse = await fetch(`${SUPABASE_URL}/rest/v1/photos`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "apikey": SUPABASE_KEY,
+        "Authorization": `Bearer ${SUPABASE_KEY}`,
+        "Prefer": "return=minimal"
+      },
+      body: JSON.stringify({
+        image_url: cloudinaryResult.secure_url,
+        public_id: cloudinaryResult.public_id,
+        challenge_number: currentIndex + 1,
+        challenge_text: challenges[currentIndex],
+        guest_name: guestName,
+        approved: true
+      })
+    });
+
+    if (!databaseResponse.ok) {
+      const databaseError = await databaseResponse.text();
+      throw new Error(`Supabase-Fehler: ${databaseError}`);
     }
 
     showView("successView");
