@@ -69,7 +69,7 @@ html, body {
   height: 100%;
   margin: 0;
   display: grid;
-  grid-template-rows: 1fr auto;
+grid-template-rows: minmax(0, 1fr) auto;
   gap: 20px;
   opacity: 0;
   transition: opacity 1.1s ease;
